@@ -8,12 +8,15 @@ from rest_framework import serializers
 from games.models import Game
 
 
-class GameSerializer(serializers.Serializer):
-    pk = serializers.IntegerField(read_only=True)
-    name = serializers.CharField(max_length=200)
-    release_date = serializers.DateTimeField()
-    game_category = serializers.CharField(max_length=200)
-    played = serializers.BooleanField(required=False)
+class GameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = ( 'id',
+                   'name',
+                   'release_date',
+                   'game_category',
+                    'played'
+                  )
 
     def create(self, validated_data):
         return Game.objects.create(**validated_data)
